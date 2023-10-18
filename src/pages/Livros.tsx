@@ -1,10 +1,12 @@
 import React from 'react'
-import Header from '../components/Header/Header'
+import Header from '../components/Header'
+import Filtro from '../components/Filtros/Filtro'
 
 function Livros() {
   return (
     <div>  
-        <Header></Header>
+        <Header/>
+        <Filtro/>
     </div>
   )
 }
