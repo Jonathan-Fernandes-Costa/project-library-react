@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  // eslint-disable-next-line no-undef
+  plugins: [require("tw-elements/dist/plugin.cjs")],
 }
 
