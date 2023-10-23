@@ -1,12 +1,14 @@
-export type LivroCadastro = {
+export type Livro = {
     id?: number | null;
-    fotoCapaId: number | null;
     titulo: string;
     subtitulo: string;
     codigo: string;
     editora: string;
     autor: string;
-    sinopse: string;
-    anoEdicao: number;
     livroCategoriaId: number;
+    livroCategoria: {
+        descricao: string;
+    }
+    usuarioUltimaAlteracao: string;
+    dataUltimaAlteracao: string;
 }

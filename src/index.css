@@ -5,3 +5,10 @@
 body {
     background-color: lightgray;
 }
+.custom-cell {
+    max-width: 289px; /* ou qualquer outro valor que se adeque ao seu design */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 10px;
+}
