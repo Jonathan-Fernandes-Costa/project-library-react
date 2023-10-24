@@ -25,7 +25,7 @@ function TabelaLivros({livros}: {livros:Livro[]}) {
         <div className="p-5 ">
             <div className=" bg-white shadow-md rounded-md p-4 overflow-x-auto w-full max-w-full">
                 <div className="min-w-full">
-                <HeaderLivros/>
+                <HeaderLivros thema="Lista"/>
 
                 </div>
                 <table className="min-w-full text-left text-sm dark:border-neutral-500 dark:bg-neutral-600">
