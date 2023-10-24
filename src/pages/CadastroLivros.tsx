@@ -1,7 +1,9 @@
+import FormCadastroLivro from "../templates/FormulárioCadastroLivro/FormCadastroLivro"
+
 function CadastroLivros() {
   return (
     <div>
-<p>Teste</p>
+      <FormCadastroLivro/>
     </div>
   )
 }
