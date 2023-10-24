@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-
+import imageIcon from '../../assets/images/input-image.png';
+import Obrigatorio from '../../components/Obrigatorio/Obrigatorio';
 type FormData = {
   codigo: string;
   anoEdicao: string;
@@ -24,60 +25,79 @@ function FormCadastroLivro() {
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
-//testea
+  //testea
   return (
     <div className='p-5'>
       <div className='mt-1 p-3'>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex">
-          <div className='bg-white shadow-md rounded-md mr-5 p-10'>
-            <div className="flex flex-col items-center justify-center  p-4">
-              <h2 className='font-bold'>Envio de Arquivos!</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex">
+          <div className='bg-white shadow-md rounded-md mr-5 w-1/3'>
+            <div className="flex flex-col items-center justify-center p-5">
+              <h2 className='font-bold'>Envio de Arquivos!<span className='text-red-500'> *</span></h2>
               <h3>Clique ou arraste seu arquivo até aqui!</h3>
-              <div className='border-dashed border-2 '>
-              <input
-                type="file"
-                className="hidden"
-                {...register('arquivo')} 
-                ref={fileInputRef}
-              />
-              <div className="mb-2">
-                <img
-                  src="./assets/input-image.png"
-                  alt="Ícone de upload"
-                  className="h-16 w-16"
+              <div className='mt-4 border-dashed border-2'>
+                <input
+                  type="file"
+                  className="hidden"
+                  {...register('arquivo')}
+                  ref={fileInputRef}
                 />
-              </div>
+                <div className="">
+                  <img
+                    src={imageIcon}
+                    alt="Ícone de upload"
+                    className="mx-auto cursor-pointer"
+                    onClick={onFileInputClick}
+                  />
+                </div>
 
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="text-gray-600"
-                  onClick={onFileInputClick}
-                >TEste
-                </button>
               </div>
             </div>
           </div>
-
-          <div className='bg-white shadow-md rounded-md '>
-          <input {...register('codigo')} placeholder="Código" className="w-full p-2 border" />
-          <input {...register('anoEdicao')} placeholder="Ano Edição" className="w-full p-2 border" />
-          <input {...register('titulo')} placeholder="Título" className="w-full p-2 border" />
-          <input {...register('subtitulo')} placeholder="Subtitulo" className="w-full p-2 border" />
-
-          <select {...register('livroCategoria')} className="w-full p-2 border">
-            <option value="selecione">Selecione</option>
-
-          </select>
-
-          <input {...register('editora')} placeholder="Editora" className="w-full p-2 border" />
-          <input {...register('autor')} placeholder="Autor" className="w-full p-2 border" />
-          <textarea {...register('sinopse')} placeholder="Sinopse" className="w-full p-2 border" />
-
-
-          <button type="submit" className="p-2 bg-blue-500 text-white">Enviar</button>
+          <div className='bg-white shadow-md rounded-md w-full p-3'>
+            {/* Tranformar em Componentes depois */}
+            <div className='flex'>
+              <div className='w-1/4 mr-2 flex flex-col'>
+                <label className='mb-1'>Código <Obrigatorio /></label>
+                <input {...register('codigo')} className="w-full p-2 border rounded-md" />
+              </div>
+              <div className='w-1/4 mr-2 flex flex-col'>
+                <label className='mb-1'>Ano Edição <Obrigatorio /> </label>
+                <input {...register('anoEdicao')} className="w-full p-2 border rounded-md" />
+              </div>
+              <div className='w-1/2 flex flex-col'>
+                <label className='mb-1'>Título <Obrigatorio /></label>
+                <input {...register('titulo')} className="w-full p-2 border rounded-md" />
+              </div>
+            </div>
+            <div className='w-full mt-3 flex flex-col'>
+              <label className='mb-1'>Subtitulo <Obrigatorio /></label>
+              <input {...register('subtitulo')} className="w-full p-2 border rounded-md" />
+            </div>
+            <div className='flex mt-3'>
+              <div className='w-1/2 mr-2 flex flex-col'>
+                <label className='mb-1'>Livro Categoria <Obrigatorio /></label>
+                <select {...register('livroCategoria')} className="p-2 h-full border rounded-md">
+                  <option value="selecione">Selecione</option>
+                </select>
+              </div>
+              <div className='w-1/2 flex flex-col'>
+                <label className='mb-1'>Editora <Obrigatorio /></label>
+                <input {...register('editora')} className="p-2 border rounded-md" />
+              </div>
+            </div>
+            <div className='w-full mt-3 flex flex-col'>
+              <label className='mb-1'>Autor <Obrigatorio /></label>
+              <input {...register('autor')} className="w-full p-2 border rounded-md" />
+            </div>
+            <div className='w-full mt-3 flex flex-col'>
+              <label className='mb-1'>Sinopse <Obrigatorio /></label>
+              <textarea {...register('sinopse')} className="w-full h-full p-2 border rounded-md" />
+            </div>
+            <button type="submit" className="p-2 mt-10 bg-blue-500 text-white">Enviar</button>
           </div>
+
+
+
         </form>
       </div>
     </div>
