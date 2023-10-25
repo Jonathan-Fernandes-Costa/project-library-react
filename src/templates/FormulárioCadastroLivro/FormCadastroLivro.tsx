@@ -2,32 +2,25 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import imageIcon from '../../assets/images/input-image.png';
 import Obrigatorio from '../../components/Obrigatorio/Obrigatorio';
-type FormData = {
-  codigo: string;
-  anoEdicao: string;
-  titulo: string;
-  subtitulo: string;
-  livroCategoria: string;
-  editora: string;
-  autor: string;
-  sinopse: string;
-  arquivo: FileList;
-};
+import { cadastrarLivro } from '../../services/chamadasAPI';
+import { CategoriaLivros, FormData } from '../../types/livro.d';
 
-function FormCadastroLivro() {
+
+function FormCadastroLivro({categorias}: {categorias:CategoriaLivros[]}) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const onFileInputClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-  const { register, handleSubmit } = useForm<FormData>();
+
+  const { register, handleSubmit, formState: {errors}} = useForm<FormData>();
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    cadastrarLivro(data)
   };
   //testea
   return (
-    <div className='p-5'>
+    <div className='p-1'>
       <div className='mt-1 p-3'>
         <form onSubmit={handleSubmit(onSubmit)} className="flex">
           <div className='bg-white shadow-md rounded-md mr-5 w-1/3'>
@@ -58,42 +51,48 @@ function FormCadastroLivro() {
             <div className='flex'>
               <div className='w-1/4 mr-2 flex flex-col'>
                 <label className='mb-1'>Código <Obrigatorio /></label>
-                <input {...register('codigo')} className="w-full p-2 border rounded-md" />
+                <input {...register('codigo', { required: true})} className="w-full p-2 border rounded-md" />
               </div>
               <div className='w-1/4 mr-2 flex flex-col'>
                 <label className='mb-1'>Ano Edição <Obrigatorio /> </label>
-                <input {...register('anoEdicao')} className="w-full p-2 border rounded-md" />
+                <input {...register('anoEdicao', { required: true})} className="w-full p-2 border rounded-md" />
               </div>
               <div className='w-1/2 flex flex-col'>
                 <label className='mb-1'>Título <Obrigatorio /></label>
-                <input {...register('titulo')} className="w-full p-2 border rounded-md" />
+                <input {...register('titulo', { required: true})} className="w-full p-2 border rounded-md" />
               </div>
             </div>
             <div className='w-full mt-3 flex flex-col'>
               <label className='mb-1'>Subtitulo <Obrigatorio /></label>
-              <input {...register('subtitulo')} className="w-full p-2 border rounded-md" />
+              <input {...register('subtitulo', { required: true})} className="w-full p-2 border rounded-md" />
             </div>
             <div className='flex mt-3'>
               <div className='w-1/2 mr-2 flex flex-col'>
                 <label className='mb-1'>Livro Categoria <Obrigatorio /></label>
-                <select {...register('livroCategoria')} className="p-2 h-full border rounded-md">
-                  <option value="selecione">Selecione</option>
+                <select {...register('livroCategoria', { required: true, validate: value => value !== "selecione"})} className="p-2 h-full border rounded-md">
+                <option value="selecione">Selecione</option>
+                  {categorias.length >0 && categorias.map(categoria =>(
+                    <option value={categoria.id}>{categoria.descricao}</option>
+                  ))}
                 </select>
               </div>
               <div className='w-1/2 flex flex-col'>
                 <label className='mb-1'>Editora <Obrigatorio /></label>
-                <input {...register('editora')} className="p-2 border rounded-md" />
+                <input {...register('editora', { required: true})} className="p-2 border rounded-md" />
               </div>
             </div>
             <div className='w-full mt-3 flex flex-col'>
               <label className='mb-1'>Autor <Obrigatorio /></label>
-              <input {...register('autor')} className="w-full p-2 border rounded-md" />
+              <input {...register('autor', { required: true})} className="w-full p-2 border rounded-md" />
             </div>
             <div className='w-full mt-3 flex flex-col'>
               <label className='mb-1'>Sinopse <Obrigatorio /></label>
-              <textarea {...register('sinopse')} className="w-full h-full p-2 border rounded-md" />
+              <textarea {...register('sinopse', { required: true})} className="w-full h-full p-2 border rounded-md" />
             </div>
             <button type="submit" className="p-2 mt-10 bg-blue-500 text-white">Enviar</button>
+            {Object.keys(errors).length > 0 && 
+                <span className="text-red-500 ml-3">Preencha todos os campos obrigatórios</span>
+            }
           </div>
 
 

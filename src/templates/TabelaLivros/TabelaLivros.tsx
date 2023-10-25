@@ -7,7 +7,7 @@ function TabelaLivros({livros}: {livros:Livro[]}) {
         const date = new Date(dateString);
       
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Adicionamos 1 porque os meses no JavaScript são 0-indexed (0-11)
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
       
         const hours = String(date.getHours()).padStart(2, '0');
@@ -15,11 +15,6 @@ function TabelaLivros({livros}: {livros:Livro[]}) {
       
         return `${day}/${month}/${year} ${hours}:${minutes}`;
       }
-      
-      const apiDate = "2023-06-13T18:10:39.948937";
-      const formattedDate = convertToBrazilianFormat(apiDate);
-      console.log(formattedDate); // Exibe: 13/06/2023 18:10
-      
     return (
         <div>
         <div className="p-5 ">
