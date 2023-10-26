@@ -1,7 +1,10 @@
 import {BsThreeDotsVertical} from 'react-icons/bs'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
-function BotaoDropdowMenu({editar, excluir, handleEditar, handleExcluir}: {editar?: boolean, excluir?: boolean, handleEditar?: ()=> void, handleExcluir?: ()=> void}) {
+function BotaoDropdowMenu({livroid, editar, excluir, handleEditar, handleExcluir}: {livroid?:  number, editar?: boolean, excluir?: boolean, handleEditar?: ()=> void, handleExcluir: (id:number)=> object}) {
+  function Apaga(){
+    handleExcluir(livroid)
+  }
   return (
     <div className="flex justify-center items-center ">
       <DropdownMenu.Root>
@@ -18,7 +21,7 @@ function BotaoDropdowMenu({editar, excluir, handleEditar, handleExcluir}: {edita
           </DropdownMenu.Item>
           )}
           {excluir && (
-            <DropdownMenu.Item onClick={handleExcluir} className="px-4 py-2 hover:bg-gray-200">
+            <DropdownMenu.Item onClick={Apaga} className="px-4 py-2 hover:bg-gray-200">
             Excluir
           </DropdownMenu.Item>
           )}

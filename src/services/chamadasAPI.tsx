@@ -2,7 +2,7 @@ import axios from 'axios';
 import { FormData } from '../types/livro.d';
 
 const headers = {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lVXN1YXJpbyI6IkVTVEFHSUFSSU8iLCJub21lQ29sYWJvcmFkb3IiOiJBTlRPTklPIEFNQVVSSSBCRVNFUlJBIERFIFNPVVNBIiwiaWRDb2xhYm9yYWRvciI6Ijg1NiIsImlkQ2FyZ28iOiI0MiIsImNhcmdvIjoiUEVEUkVJUk8iLCJpZFVzdWFyaW8iOiIyNTEiLCJhbWJpZW50ZSI6IlBST0QiLCJleHAiOjE2OTgyOTA3MzUsImlzcyI6IkJPWDNfRVJQX0FQSSIsImF1ZCI6Imh0dHBzOi8vcGxhc2ZyYW4uY29tIn0.ojzUXf3rCSzHQCp-iX3WqndxQ-8_lG3B7-Bp-a-4nwk'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lVXN1YXJpbyI6IkVTVEFHSUFSSU8iLCJub21lQ29sYWJvcmFkb3IiOiJBTlRPTklPIEFNQVVSSSBCRVNFUlJBIERFIFNPVVNBIiwiaWRDb2xhYm9yYWRvciI6Ijg1NiIsImlkQ2FyZ28iOiI0MiIsImNhcmdvIjoiUEVEUkVJUk8iLCJpZFVzdWFyaW8iOiIyNTEiLCJhbWJpZW50ZSI6IlBST0QiLCJleHAiOjE2OTgzMjk4NTMsImlzcyI6IkJPWDNfRVJQX0FQSSIsImF1ZCI6Imh0dHBzOi8vcGxhc2ZyYW4uY29tIn0.fONnhg1FtGlAVi9rAYVA-qR9ncv6031TZVU2_RF-Qzs'
   };
 
   
@@ -58,4 +58,12 @@ async function listarLivroId(id:number){
         return("Erro ao buscar o livro"+ error)
     }
 }
-export { listagemLivros, cadastrarLivro, listagemCategorias, listarLivroId}
+async function deletarLivroId(id:number){
+    try{
+        const response = await axios.delete("https://beta-api-new.plasfran.com/api/livro/"+id, {headers: headers})
+        return response.data
+    }catch(error){
+        return("Erro ao buscar o livro"+ error)
+    }
+}
+export { listagemLivros, cadastrarLivro, listagemCategorias, listarLivroId, deletarLivroId}

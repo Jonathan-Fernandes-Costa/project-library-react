@@ -2,7 +2,7 @@ import { Livro } from "../../types/livro.d"
 import HeaderLivros from "../../components/HeaderLivros/HeaderLivros"
 import BotaoAção from "../../components/BotaoDropdownMenu/BotaoDropdowMenu"
 import {FaPencilAlt} from 'react-icons/fa'
-function TabelaLivros({livros}: {livros:Livro[]}) {
+function TabelaLivros({livros, handleExcluir}: {livros:Livro[],  handleExcluir: any}) {
     function convertToBrazilianFormat(dateString: string) {
         const date = new Date(dateString);
       
@@ -15,6 +15,7 @@ function TabelaLivros({livros}: {livros:Livro[]}) {
       
         return `${day}/${month}/${year} ${hours}:${minutes}`;
       }
+
     return (
         <div>
         <div className="p-5 ">
@@ -43,7 +44,7 @@ function TabelaLivros({livros}: {livros:Livro[]}) {
                         <td className="custom-cell">{livro.autor}</td>
                         <td className="custom-cell"><div className="inline-flex bg-green-200 text-xs text-green-700 rounded-md p-1">
                         <FaPencilAlt/>{livro.usuarioUltimaAlteracao + " - " + convertToBrazilianFormat(livro.dataUltimaAlteracao)}</div></td>
-                        <td className=""><BotaoAção editar={true} excluir={true}/></td>
+                        <td className=""><BotaoAção livroid={livro.id} editar={true} handleExcluir={handleExcluir} excluir={true}/></td>
                     </tr>
                      ))}
                     </tbody>
