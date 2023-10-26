@@ -1,7 +1,7 @@
 import {BsThreeDotsVertical} from 'react-icons/bs'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
-function BotaoDropdowMenu({livroid, editar, excluir, handleEditar, handleExcluir}: {livroid?:  number, editar?: boolean, excluir?: boolean, handleEditar?: ()=> void, handleExcluir: (id:number)=> object}) {
+function BotaoDropdowMenu({livroid, editar, excluir, handleEditar, handleExcluir}: {livroid:  number, editar?: boolean, excluir?: boolean, handleEditar?: ()=> void, handleExcluir: (id:number)=> void}) {
   function Apaga(){
     handleExcluir(livroid)
   }

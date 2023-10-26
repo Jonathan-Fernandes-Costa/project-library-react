@@ -2,7 +2,7 @@ import { Livro } from "../../types/livro.d"
 import HeaderLivros from "../../components/HeaderLivros/HeaderLivros"
 import BotaoAção from "../../components/BotaoDropdownMenu/BotaoDropdowMenu"
 import {FaPencilAlt} from 'react-icons/fa'
-function TabelaLivros({livros, handleExcluir}: {livros:Livro[],  handleExcluir: any}) {
+function TabelaLivros({livros, handleExcluir}: {livros:Livro[],  handleExcluir: (id:number)=> void}) {
     function convertToBrazilianFormat(dateString: string) {
         const date = new Date(dateString);
       
