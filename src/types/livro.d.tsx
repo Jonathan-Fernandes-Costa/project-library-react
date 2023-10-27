@@ -6,20 +6,26 @@ export type Livro = {
     editora: string;
     autor: string;
     sinopse: string;
-    anoEdicao: number;
+    anoEdicao: string;
     livroCategoriaId: number;
     livroCategoria: {
+        id: number;
         descricao: string;
     }
     usuarioUltimaAlteracao: string;
     dataUltimaAlteracao: string;
 }
 export type FormData = {
+    id?: number;
     codigo: string;
     anoEdicao: string;
     titulo: string;
     subtitulo: string;
-    livroCategoria: string;
+    livroCategoriaId: number;
+    livroCategoria: {
+        id: number;
+        descricao: string;
+    };
     editora: string;
     autor: string;
     sinopse: string;

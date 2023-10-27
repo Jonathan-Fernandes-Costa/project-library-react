@@ -37,7 +37,7 @@ function TabelaLivros({livros, handleExcluir}: {livros:Livro[],  handleExcluir: 
                     </thead>
                     <tbody>
                      {livros.length >0 && livros.map(livro => (
-                        <tr className="border-b bg-white-100 hover:bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
+                        <tr key={livro.id} className="border-b bg-white-100 hover:bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                         <td className="custom-cell">{livro.titulo}</td>
                         <td className="custom-cell">{livro.subtitulo}</td>
                         <td className="custom-cell">{livro.livroCategoria.descricao}</td>

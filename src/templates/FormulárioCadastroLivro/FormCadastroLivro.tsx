@@ -2,23 +2,42 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import imageIcon from '../../assets/images/input-image.png';
 import Obrigatorio from '../../components/Obrigatorio/Obrigatorio';
-import { cadastrarLivro } from '../../services/chamadasAPI';
-import { CategoriaLivros, FormData } from '../../types/livro.d';
+import { CategoriaLivros, FormData, Livro } from '../../types/livro.d';
 
 
-function FormCadastroLivro({categorias}: {categorias:CategoriaLivros[]}) {
+function FormCadastroLivro({categorias, livro, handleCadastrar, handleAtualizar}: {categorias:CategoriaLivros[], livro?:Livro, handleCadastrar: (data:FormData)=> void, handleAtualizar: (data:FormData) => void}) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const onFileInputClick = () => {
+    
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-
-  const { register, handleSubmit, formState: {errors}} = useForm<FormData>();
+  const { register, handleSubmit, formState: {errors}, setValue} = useForm<FormData>();
   const onSubmit = (data: FormData) => {
-    cadastrarLivro(data)
+    if(livro){
+      const newData = {...data, id: livro.id}
+      console.log(newData)
+      handleAtualizar(newData)
+    }else{
+
+      handleCadastrar(data)
+    }
   };
-  //testea
+  React.useEffect(()=>{
+    if(livro && livro.livroCategoria){{
+        setValue('codigo', livro.codigo);
+        setValue('anoEdicao', livro.anoEdicao);
+        setValue('titulo', livro.titulo);
+        setValue('subtitulo', livro.subtitulo);
+        setValue('livroCategoria', livro.livroCategoria);
+        setValue('livroCategoriaId', livro.livroCategoriaId)
+        setValue('editora', livro.editora);
+        setValue('autor', livro.autor);
+        setValue('sinopse', livro.sinopse);
+      }
+    }
+  })
   return (
     <div className='p-1'>
       <div className='mt-1 p-3'>
@@ -31,7 +50,7 @@ function FormCadastroLivro({categorias}: {categorias:CategoriaLivros[]}) {
                 <input
                   type="file"
                   className="hidden"
-                  {...register('arquivo')}
+                  // {...register('arquivo')}
                   ref={fileInputRef}
                 />
                 <div className="">
@@ -69,8 +88,8 @@ function FormCadastroLivro({categorias}: {categorias:CategoriaLivros[]}) {
             <div className='flex mt-3'>
               <div className='w-1/2 mr-2 flex flex-col'>
                 <label className='mb-1'>Livro Categoria <Obrigatorio /></label>
-                <select {...register('livroCategoria', { required: true, validate: value => value !== "selecione"})} className="p-2 h-full border rounded-md">
-                <option value="selecione">Selecione</option>
+                <select {...register('livroCategoriaId', { required: true, validate: value => value !== -1})} className="p-2 h-full border rounded-md">
+                <option value={-1}>Selecione</option>
                   {categorias.length >0 && categorias.map(categoria =>(
                     <option value={categoria.id}>{categoria.descricao}</option>
                   ))}
