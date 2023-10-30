@@ -1,8 +1,6 @@
-import  { useState } from 'react'
+import { CategoriaLivros } from '../../types/livro.d';
 
-function Filtro() {
-    const [pesquisa, setPesquisa] = useState('');
-    const [categoria, setCategoria] = useState('Todos');
+function Filtro({ pesquisa, categorias, handlePesquisa, categoriaPesquisa, setCategoriaPesquisa }: { pesquisa: string, categorias: CategoriaLivros[], handlePesquisa: (texto: string) => void, setCategoriaPesquisa: (text: any) => void, categoriaPesquisa: number | null }) {
     return (
         <div className="p-5">
             <div className='p-3 bg-white shadow-md rounded-md'>
@@ -15,7 +13,7 @@ function Filtro() {
                             placeholder="Pesquisar..."
                             className="w-full p-2 border rounded-md"
                             value={pesquisa}
-                            onChange={e => setPesquisa(e.target.value)}
+                            onChange={e => handlePesquisa(e.target.value)}
                         />
                     </div>
 
@@ -23,10 +21,22 @@ function Filtro() {
                         <label className="mb-2 font-medium text-gray-600">Livro Categoria</label>
                         <select
                             className="w-full p-2 border rounded-md"
-                            value={categoria}
-                            onChange={e => setCategoria(e.target.value)}
+                            value={categoriaPesquisa}
+                            onChange={e => {
+                                if (e.target.value == "todos") {
+                                    setCategoriaPesquisa(null)
+                                } else {
+                                    setCategoriaPesquisa(e.target.value)
+                                }
+
+                            }
+                            }
+
                         >
-                            <option value="Todos">Todos</option>
+                            <option value="todos">Todos</option>
+                            {categorias && categorias.map(categoria => (
+                                <option key={categoria.id} value={categoria.id}>{categoria.descricao}</option>
+                            ))}
                         </select>
                     </div>
                 </div>

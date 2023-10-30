@@ -15,12 +15,14 @@ function FormCadastroLivro({categorias, livro, handleCadastrar, handleAtualizar}
   };
   const { register, handleSubmit, formState: {errors}, setValue} = useForm<FormData>();
   const onSubmit = (data: FormData) => {
-    if(livro){
-      const newData = {...data, id: livro.id}
+    if(Object.keys(livro).length !== 0){
+      console.log("Entrou")
+      const newData = {...data, id: livro!.id}
       console.log(newData)
       handleAtualizar(newData)
     }else{
-
+      console.log("Entrou no cadastro")
+      console.log(data)
       handleCadastrar(data)
     }
   };

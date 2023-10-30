@@ -24,11 +24,11 @@ function CadastroLivros() {
   }
   const navigation = useNavigate();
   async function HandleCadastrar(livro:FormData){
-    cadastrarLivro(livro)
+    await cadastrarLivro(livro)
     navigation('/')
   }
   async function HandleAtualizar(livro:FormData){
-    atualizarLivro(livro)
+    await atualizarLivro(livro)
     navigation('/')
   }
   useEffect(() => {
