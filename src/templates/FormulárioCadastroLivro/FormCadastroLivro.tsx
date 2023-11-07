@@ -3,36 +3,34 @@ import { useForm } from 'react-hook-form';
 import imageIcon from '../../assets/images/input-image.png';
 import Obrigatorio from '../../components/Obrigatorio/Obrigatorio';
 import { CategoriaLivros, FormData, Livro } from '../../types/livro.d';
+import { ClipLoader } from 'react-spinners';
 
 
-function FormCadastroLivro({categorias, livro, handleCadastrar, handleAtualizar}: {categorias:CategoriaLivros[], livro?:Livro, handleCadastrar: (data:FormData)=> void, handleAtualizar: (data:FormData) => void}) {
+function FormCadastroLivro({ categorias, livro, handleCadastrar, handleAtualizar, isLoading }: { categorias: CategoriaLivros[], livro?: Livro, handleCadastrar: (data: FormData) => void, handleAtualizar: (data: FormData) => void, isLoading: boolean }) {
+
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const onFileInputClick = () => {
-    
+
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-  const { register, handleSubmit, formState: {errors}, setValue} = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
   const onSubmit = (data: FormData) => {
-    if(Object.keys(livro).length !== 0){
-      console.log("Entrou")
-      const newData = {...data, id: livro!.id}
-      console.log(newData)
+    if (Object.keys(livro).length !== 0) {
+      const newData = { ...data, id: livro!.id }
       handleAtualizar(newData)
-    }else{
-      console.log("Entrou no cadastro")
-      console.log(data)
+    } else {
       handleCadastrar(data)
     }
   };
-  React.useEffect(()=>{
-    if(livro && livro.livroCategoria){{
+  React.useEffect(() => {
+    if (livro && livro.livroCategoria) {
+      {
         setValue('codigo', livro.codigo);
         setValue('anoEdicao', livro.anoEdicao);
         setValue('titulo', livro.titulo);
         setValue('subtitulo', livro.subtitulo);
-        setValue('livroCategoria', livro.livroCategoria);
         setValue('livroCategoriaId', livro.livroCategoriaId)
         setValue('editora', livro.editora);
         setValue('autor', livro.autor);
@@ -72,47 +70,55 @@ function FormCadastroLivro({categorias, livro, handleCadastrar, handleAtualizar}
             <div className='flex'>
               <div className='w-1/4 mr-2 flex flex-col'>
                 <label className='mb-1'>Código <Obrigatorio /></label>
-                <input {...register('codigo', { required: true})} className="w-full p-2 border rounded-md" />
+                <input {...register('codigo', { required: true })} className="w-full p-2 border rounded-md" />
               </div>
               <div className='w-1/4 mr-2 flex flex-col'>
                 <label className='mb-1'>Ano Edição <Obrigatorio /> </label>
-                <input {...register('anoEdicao', { required: true})} className="w-full p-2 border rounded-md" />
+                <input type="number" {...register('anoEdicao', { required: true })} className="w-full p-2 border rounded-md" />
               </div>
               <div className='w-1/2 flex flex-col'>
                 <label className='mb-1'>Título <Obrigatorio /></label>
-                <input {...register('titulo', { required: true})} className="w-full p-2 border rounded-md" />
+                <input {...register('titulo', { required: true })} className="w-full p-2 border rounded-md" />
               </div>
             </div>
             <div className='w-full mt-3 flex flex-col'>
               <label className='mb-1'>Subtitulo <Obrigatorio /></label>
-              <input {...register('subtitulo', { required: true})} className="w-full p-2 border rounded-md" />
+              <input {...register('subtitulo', { required: true })} className="w-full p-2 border rounded-md" />
             </div>
             <div className='flex mt-3'>
               <div className='w-1/2 mr-2 flex flex-col'>
                 <label className='mb-1'>Livro Categoria <Obrigatorio /></label>
-                <select {...register('livroCategoriaId', { required: true, validate: value => value !== -1})} className="p-2 h-full border rounded-md">
-                <option value={-1}>Selecione</option>
-                  {categorias.length >0 && categorias.map(categoria =>(
+                <select {...register('livroCategoriaId', { required: true, validate: value => value !== -1 })} className="p-2 h-full border rounded-md">
+                  <option value={-1}>Selecione</option>
+                  {categorias.length > 0 && categorias.map(categoria => (
                     <option value={categoria.id}>{categoria.descricao}</option>
                   ))}
                 </select>
               </div>
               <div className='w-1/2 flex flex-col'>
                 <label className='mb-1'>Editora <Obrigatorio /></label>
-                <input {...register('editora', { required: true})} className="p-2 border rounded-md" />
+                <input {...register('editora', { required: true })} className="p-2 border rounded-md" />
               </div>
             </div>
             <div className='w-full mt-3 flex flex-col'>
               <label className='mb-1'>Autor <Obrigatorio /></label>
-              <input {...register('autor', { required: true})} className="w-full p-2 border rounded-md" />
+              <input {...register('autor', { required: true })} className="w-full p-2 border rounded-md" />
             </div>
             <div className='w-full mt-3 flex flex-col'>
               <label className='mb-1'>Sinopse <Obrigatorio /></label>
-              <textarea {...register('sinopse', { required: true})} className="w-full h-full p-2 border rounded-md" />
+              <textarea {...register('sinopse', { required: true })} className="w-full h-full p-2 border rounded-md" />
             </div>
-            <button type="submit" className="p-2 mt-10 bg-blue-500 text-white">Enviar</button>
-            {Object.keys(errors).length > 0 && 
-                <span className="text-red-500 ml-3">Preencha todos os campos obrigatórios</span>
+            <button type="submit" className="p-2 mt-10 bg-blue-500 text-white">
+              {isLoading ? (
+                <>
+                  <ClipLoader className='mr-1' size={14} color={"#ffffff"} loading={true} />
+                  Enviando
+                </>
+              ) : 'Enviar'}
+            </button>
+
+            {Object.keys(errors).length > 0 &&
+              <span className="text-red-500 ml-3">Preencha todos os campos obrigatórios</span>
             }
           </div>
 

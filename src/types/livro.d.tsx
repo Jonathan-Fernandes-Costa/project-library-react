@@ -22,16 +22,18 @@ export type FormData = {
     titulo: string;
     subtitulo: string;
     livroCategoriaId: number;
-    livroCategoria: {
-        id: number;
-        descricao: string;
-    };
     editora: string;
     autor: string;
     sinopse: string;
-    arquivo: FileList;
   };
 export type CategoriaLivros = {
     id: number;
     descricao: string;
+}
+export type dadosListagem = {
+    dados: Livro[],
+    totalPages: number,
+    currentPage: number,
+    pageSize: number,
+    totalRegisters: number
 }

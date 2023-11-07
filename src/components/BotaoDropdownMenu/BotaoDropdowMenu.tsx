@@ -18,12 +18,12 @@ function handleAtualizarClick(){
         
         <DropdownMenu.Content className="mt-2 bg-white border border-gray-200 shadow-md">
           {editar && (
-          <DropdownMenu.Item onClick={handleAtualizarClick} className="px-4 py-2  flex align-middle hover:bg-green-400">
+          <DropdownMenu.Item onClick={handleAtualizarClick} className="px-4 py-2  cursor-pointer  flex align-middle hover:bg-green-400">
             <BsFillPencilFill className="mr-1"/>Editar
           </DropdownMenu.Item>
           )}
           {excluir && (
-            <DropdownMenu.Item onClick={Apaga} className="px-4 py-2 flex align-middle hover:bg-red-400">
+            <DropdownMenu.Item onClick={Apaga} className="px-4 py-2 flex align-middle  cursor-pointer hover:bg-red-400">
             <BsFillTrashFill className="mr-1"/> Excluir
           </DropdownMenu.Item>
           )}

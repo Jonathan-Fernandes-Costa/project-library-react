@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import Livros from './pages/Livros'
 import CadastroLivros from './pages/CadastroLivros';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <ToastContainer/>
     <RouterProvider router={router}/>
   </React.StrictMode>,
 )

@@ -1,5 +1,5 @@
 import { CategoriaLivros } from '../../types/livro.d';
-
+import {TfiLayoutGrid3Alt} from 'react-icons/tfi'
 function Filtro({ pesquisa, categorias, handlePesquisa, categoriaPesquisa, setCategoriaPesquisa }: { pesquisa: string, categorias: CategoriaLivros[], handlePesquisa: (texto: string) => void, setCategoriaPesquisa: (text: any) => void, categoriaPesquisa: number | null }) {
     return (
         <div className="p-5">
@@ -28,7 +28,6 @@ function Filtro({ pesquisa, categorias, handlePesquisa, categoriaPesquisa, setCa
                                 } else {
                                     setCategoriaPesquisa(e.target.value)
                                 }
-
                             }
                             }
 
@@ -39,6 +38,7 @@ function Filtro({ pesquisa, categorias, handlePesquisa, categoriaPesquisa, setCa
                             ))}
                         </select>
                     </div>
+                    
                 </div>
             </div>
         </div>
