@@ -1,20 +1,17 @@
-import axios from 'axios';
+import api from './api';
 import { FormData } from '../types/livro.d';
 import { toast } from 'react-toastify';
-const headers = {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lVXN1YXJpbyI6IkVTVEFHSUFSSU8iLCJub21lQ29sYWJvcmFkb3IiOiJBTlRPTklPIEFNQVVSSSBCRVNFUlJBIERFIFNPVVNBIiwiaWRDb2xhYm9yYWRvciI6Ijg1NiIsImlkQ2FyZ28iOiI0MiIsImNhcmdvIjoiUEVEUkVJUk8iLCJpZFVzdWFyaW8iOiIyNTEiLCJhbWJpZW50ZSI6IlBST0QiLCJleHAiOjE2OTkzMDc1NjgsImlzcyI6IkJPWDNfRVJQX0FQSSIsImF1ZCI6Imh0dHBzOi8vcGxhc2ZyYW4uY29tIn0.hmHn3BLsavAUX2atA9m8-4Bf7GrWbJwk8TfXdYhaQdo'
-  };
+import { LoginForm } from '../types/login.d';
 
-  
-async function listagemLivros(pageSize:number, currentPage:number, pesquisa:string | null, livroCategoriaId:number | null){
+async function listagemLivros(pageSize:number, currentPage:number, pesquisa:string | null, livroCategoriaId:string |number | null){
     const data = {
         "pageSize": pageSize,
         "currentPage": currentPage,
-        "pesquisa": pesquisa,
+        "pesquisa": pesquisa?.toUpperCase(),
         "livroCategoriaId": livroCategoriaId
     }
     try{
-        const response = await axios.post("https://beta-api-new.plasfran.com/api/livro/listagem", data, { headers: headers});
+        const response = await api.post("https://localhost:7246/api/Livros", data);
         return response.data;
     }catch(error){
         return ("Error a encontrar" + error)
@@ -32,7 +29,7 @@ async function cadastrarLivro(livro:FormData){
         "livroCategoriaId": livro.livroCategoriaId
     }
     try {
-        const response = await axios.post("https://beta-api-new.plasfran.com/api/livro", data, {headers: headers})
+        const response = await api.post("/Livros/cadastro", data)
         toast.success("Cadastro realizado com sucesso")
         return response.data
     } catch (error) {
@@ -41,12 +38,9 @@ async function cadastrarLivro(livro:FormData){
     }
 }
 
-async function listagemCategorias(pesquisa:string){
-    const data ={
-        "pesquisa": pesquisa
-    }
+async function listagemCategorias(){
     try{
-        const response = await axios.post("https://beta-api-new.plasfran.com/api/LivroCategoria/Select", data, {headers: headers})
+        const response = await api.get("/LivroCategoria")
         return response.data
     }catch(error){
         return ("Erro ao cadastrar o Livro" + error)
@@ -54,7 +48,7 @@ async function listagemCategorias(pesquisa:string){
 }
 async function listarLivroId(id:number){
     try{
-        const response = await axios.get("https://beta-api-new.plasfran.com/api/livro/"+id, {headers: headers})
+        const response = await api.get("/Livros/"+id)
         return response.data
     }catch(error){
         return("Erro ao buscar o livro"+ error)
@@ -62,7 +56,7 @@ async function listarLivroId(id:number){
 }
 async function deletarLivroId(id:number){
     try{
-        const response = await axios.delete("https://beta-api-new.plasfran.com/api/livro/"+id, {headers: headers})
+        const response = await api.delete("/Livros/"+id)
         toast.success("Contato deletado com sucesso")
         return response.data
 
@@ -71,9 +65,9 @@ async function deletarLivroId(id:number){
         return("Erro ao buscar o livro"+ error)
     }
 }
-async function atualizarLivro(livro: FormData){
+async function atualizarLivro(id:number , livro: FormData){
     try{
-        const response = await axios.put("https://beta-api-new.plasfran.com/api/livro/", livro, {headers: headers})
+        const response = await api.put("/Livros/"+id, livro)
         toast.success("Livro atualizado com sucesso")
         return response.data
     }catch(error){
@@ -81,4 +75,25 @@ async function atualizarLivro(livro: FormData){
         return("Erro ao atualizar"+error)
     }
 }
-export { listagemLivros, cadastrarLivro, listagemCategorias, listarLivroId, deletarLivroId, atualizarLivro}
+
+async function login(data: LoginForm){
+    try{
+        const response = await api.post("/login", data)
+        toast.success("Login concluído")
+        return response.data
+    }catch(error){
+        toast.error("Login ou senha inválidos")
+        return("Login ou senha inválidos"+ error)
+    }
+}
+async function validaToken(){
+    try{
+        const response = await api.get("/sessao/validar")
+        if(response.data){
+            return true
+        }
+    }catch(error){
+        return(false)
+    }
+}
+export {validaToken, login, listagemLivros, cadastrarLivro, listagemCategorias, listarLivroId, deletarLivroId, atualizarLivro}
