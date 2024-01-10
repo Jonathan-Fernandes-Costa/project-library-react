@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Header from "../components/Header/Header"
 import HeaderLivros from "../components/HeaderLivros/HeaderLivros"
@@ -7,21 +8,23 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FormData } from "../types/livro.d";
 import { debounce } from "../services/debounce";
 
+
 function CadastroLivros() {
   const [categorias, setCategorias] = useState([]);
   const { id: idString } = useParams<{ id?: string }>();
-  const [livro, setLivro] = useState({});
+  const [livro, setLivro] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   const id = idString ? parseInt(idString, 10) : undefined;
+
   async function PegaCategorias() {
-    const categorias = await listagemCategorias("");
-    setCategorias(categorias.dados)
+    const categorias = await listagemCategorias();
+    setCategorias(categorias)
   }
   async function PegaLivro() {
     if (id) {
       const livro = await listarLivroId(id!)
-      setLivro(livro.dados)
+      setLivro(livro)
     }
   }
   const navigation = useNavigate();
@@ -30,27 +33,27 @@ function CadastroLivros() {
     try {
       await cadastrarLivro(livro);
     } finally {
-      navigation('/');
+      navigation('/livros');
       setIsLoading(false);
     }
   }
   async function HandleAtualizar(livro: FormData) {
     setIsLoading(true);
     try {
-      await atualizarLivro(livro);
+      await atualizarLivro(id!, livro);
     } finally {
-      navigation('/');
+      navigation('/livros');
       setIsLoading(false);
     }
   }
   const debouncedCadastro = debounce(HandleCadastrar, 2000)
   const debouncedAtualizar = debounce(HandleAtualizar, 2000)
-  const startCadastro = (livro) => {
+  const startCadastro = (livro: FormData) => {
     setIsLoading(true);
     debouncedCadastro(livro);
   }
 
-  const startAtualizar = (livro) => {
+  const startAtualizar = (livro: FormData) => {
     setIsLoading(true);
     debouncedAtualizar(livro);
   }
@@ -59,6 +62,7 @@ function CadastroLivros() {
     PegaCategorias()
     PegaLivro()
   }, []);
+  document.body.style.backgroundColor = "lightgray";
   return (
     <div>
       <Header />

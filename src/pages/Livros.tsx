@@ -5,20 +5,29 @@ import TabelaLivros from '../templates/TabelaLivros/TabelaLivros'
 import { deletarLivroId, listagemCategorias, listagemLivros } from '../services/chamadasAPI'
 import { useState, useEffect } from 'react';
 import { debounce } from '../services/debounce';
+import { dadosListagem } from '../types/livro.d';
+
+
 
 
 
 function Livros() {
   const [livros, setLivros] = useState([]);
-  const [dados, setDados] = useState({});
+  const [dados, setDados] = useState<dadosListagem>({
+    dados: [],
+    totalPages: 0,
+    currentPage: 0,
+    pageSize: 0,
+    totalRegister: 0
+  });
   const [currentPage, setCurrentPage] = useState(0);
   const [pesquisa, setPesquisa] = useState("");
   const [categorias, setCategorias] = useState([]);
-  const [categoriaPesquisa, setCategoriaPesquisa] = useState(null);
+  const [categoriaPesquisa, setCategoriaPesquisa] = useState<number | string | null>(null);
 
   async function PegaCategorias() {
-    const categorias = await listagemCategorias("");
-    setCategorias(categorias.dados)
+    const categorias = await listagemCategorias();
+    setCategorias(categorias)
   }
 
   const nextPage = () => {
@@ -41,8 +50,8 @@ function Livros() {
 
   async function PegaLivros() {
     const livros = await listagemLivros(12, currentPage, pesquisa, categoriaPesquisa);
-    setLivros(livros.dados.dados)
-    setDados(livros.dados)
+    setDados(livros)
+    setLivros(livros.dados)
   }
 
   const debouncedPegaLivros = debounce(PegaLivros, 2000);
@@ -55,12 +64,13 @@ function Livros() {
 
   useEffect(() => {
     PegaLivros();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, categoriaPesquisa]);
 
   useEffect(() => {
     PegaCategorias()
   }, [])
-
+  document.body.style.backgroundColor = "lightgray";
   return (
     <div>
 
