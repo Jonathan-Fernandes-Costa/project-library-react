@@ -10,8 +10,9 @@ export type Livro = {
     livroCategoriaId: number;
     livroCategoria: {
         id: number;
-        descricao: string;
+        nome: string;
     }
+    qtdReservas: number;
     usuarioUltimaAlteracao: string;
     dataUltimaAlteracao: string;
 }
@@ -28,12 +29,12 @@ export type FormData = {
   };
 export type CategoriaLivros = {
     id: number;
-    descricao: string;
+    nome: string;
 }
 export type dadosListagem = {
     dados: Livro[],
     totalPages: number,
     currentPage: number,
     pageSize: number,
-    totalRegisters: number
+    totalRegister: number
 }

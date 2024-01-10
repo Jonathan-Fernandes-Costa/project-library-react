@@ -16,12 +16,20 @@ function TabelaLivros({ dados, livros, handleExcluir, nextPage, prevPage, curren
     }
     function calculaMostragem() {
         if (currentPage == 0) {
-            return ("Mostrando " + (currentPage + 1) + " até " + (currentPage + 1) * 12 + " de " + dados.totalRegisters + " resultados ")
+            if(dados.totalRegister == 0){
+                return ("Nenhum livro encontrado")
+            }
+            if((currentPage + 1) * dados.pageSize < dados.totalRegister){
+                return ("Mostrando " + (currentPage + 1) + " até " + (currentPage + 1) * dados.pageSize + " de " + dados.totalRegister + " resultados ")
+            } else{
+                return ("Mostrando " + (currentPage + 1) + " até " + dados.totalRegister + " de " + dados.totalRegister + " resultados ")
+            }
+            
 
-        } else if ((currentPage + 1) * 12 > dados.totalRegisters) {
-            return ("Mostrando " + currentPage * 12 + " até " + dados.totalRegisters + " de " + dados.totalRegisters + " resultados ")
+        } else if ((currentPage + 1) * dados.pageSize > dados.totalRegister) {
+            return ("Mostrando " + currentPage * dados.pageSize + " até " + dados.totalRegister + " de " + dados.totalRegister + " resultados ")
         } else {
-            return ("Mostrando " + currentPage * 12 + " até " + (currentPage + 1) * 12 + " de " + dados.totalRegisters + " resultados ")
+            return ("Mostrando " + currentPage * dados.pageSize + " até " + (currentPage + 1) * dados.pageSize + " de " + dados.totalRegister + " resultados ")
         }
     }
     return (
@@ -47,7 +55,7 @@ function TabelaLivros({ dados, livros, handleExcluir, nextPage, prevPage, curren
                             <tr key={livro.id} className="border-b bg-white-100 hover:bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700">
                                 <td className="custom-cell">{livro.titulo}</td>
                                 <td className="custom-cell">{livro.subtitulo}</td>
-                                <td className="custom-cell">{livro.livroCategoria.descricao}</td>
+                                <td className="custom-cell">{livro.livroCategoria.nome}</td>
                                 <td className="custom-cell">{livro.autor}</td>
                                 <td className="custom-cell">
                                     <div className="inline-flex bg-green-200 text-xs  text-green-700 rounded-md p-1">
@@ -117,3 +125,4 @@ function TabelaLivros({ dados, livros, handleExcluir, nextPage, prevPage, curren
 }
 
 export default TabelaLivros
+//

@@ -1,6 +1,5 @@
 import { CategoriaLivros } from '../../types/livro.d';
-import {TfiLayoutGrid3Alt} from 'react-icons/tfi'
-function Filtro({ pesquisa, categorias, handlePesquisa, categoriaPesquisa, setCategoriaPesquisa }: { pesquisa: string, categorias: CategoriaLivros[], handlePesquisa: (texto: string) => void, setCategoriaPesquisa: (text: any) => void, categoriaPesquisa: number | null }) {
+function Filtro({ pesquisa, categorias, handlePesquisa, categoriaPesquisa, setCategoriaPesquisa }: { pesquisa: string, categorias: CategoriaLivros[], handlePesquisa: (texto: string) => void, setCategoriaPesquisa: (value: number | string | null) => void, categoriaPesquisa: number | string | null }) {
     return (
         <div className="p-5">
             <div className='p-3 bg-white shadow-md rounded-md'>
@@ -21,7 +20,7 @@ function Filtro({ pesquisa, categorias, handlePesquisa, categoriaPesquisa, setCa
                         <label className="mb-2 font-medium text-gray-600">Livro Categoria</label>
                         <select
                             className="w-full p-2 border rounded-md"
-                            value={categoriaPesquisa}
+                            value={categoriaPesquisa === null ? "todos" : categoriaPesquisa}
                             onChange={e => {
                                 if (e.target.value == "todos") {
                                     setCategoriaPesquisa(null)
@@ -34,7 +33,7 @@ function Filtro({ pesquisa, categorias, handlePesquisa, categoriaPesquisa, setCa
                         >
                             <option value="todos">Todos</option>
                             {categorias && categorias.map(categoria => (
-                                <option key={categoria.id} value={categoria.id}>{categoria.descricao}</option>
+                                <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
                             ))}
                         </select>
                     </div>

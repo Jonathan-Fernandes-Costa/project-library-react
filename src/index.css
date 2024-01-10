@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 body {
-    background-color: lightgray;
+    background-color: white;
 }
 .custom-cell {
     max-width: 289px; /* ou qualquer outro valor que se adeque ao seu design */

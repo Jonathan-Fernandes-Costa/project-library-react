@@ -17,10 +17,15 @@ function FormCadastroLivro({ categorias, livro, handleCadastrar, handleAtualizar
   };
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
   const onSubmit = (data: FormData) => {
-    if (Object.keys(livro).length !== 0) {
-      const newData = { ...data, id: livro!.id }
-      handleAtualizar(newData)
+    if (livro) {
+      if (Object.keys(livro!).length !== 0) {
+        const newData = { ...data, id: livro!.id }
+        handleAtualizar(newData)
+      }
+
     } else {
+      console.log("teste")
+      console.log(data)
       handleCadastrar(data)
     }
   };
@@ -91,7 +96,7 @@ function FormCadastroLivro({ categorias, livro, handleCadastrar, handleAtualizar
                 <select {...register('livroCategoriaId', { required: true, validate: value => value !== -1 })} className="p-2 h-full border rounded-md">
                   <option value={-1}>Selecione</option>
                   {categorias.length > 0 && categorias.map(categoria => (
-                    <option value={categoria.id}>{categoria.descricao}</option>
+                    <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
                   ))}
                 </select>
               </div>
@@ -121,9 +126,6 @@ function FormCadastroLivro({ categorias, livro, handleCadastrar, handleAtualizar
               <span className="text-red-500 ml-3">Preencha todos os campos obrigatórios</span>
             }
           </div>
-
-
-
         </form>
       </div>
     </div>
