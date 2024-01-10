@@ -1,5 +1,7 @@
+import { useAuth } from "../../context/AuthContext";
 
 function Header() {
+  const { logout } = useAuth();
   return (
     <header className="flex items-center justify-between p-4 bg-white shadow-md">
       <div className="flex-shrink-0">
@@ -11,7 +13,7 @@ function Header() {
           ADMIN
         </span>
 
-        <button className="text-blue-500">Sair</button>
+        <button className="text-blue-500" onClick={logout}>Sair</button>
       </div>
     </header>
   )
